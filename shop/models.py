@@ -1,9 +1,11 @@
 from django.db import models
+from django.urls import reverse
 
 
 class Category(models.Model):
     name = models.CharField('Название', max_length=100)
     slug = models.SlugField('Адрес (slug)', unique=True)
+    image = models.ImageField('Иконка (для главной страницы)', upload_to='categories/', blank=True)
     order = models.PositiveIntegerField('Порядок', default=0)
 
     class Meta:
@@ -39,6 +41,9 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('product_detail', args=[self.slug])
+
 
 class Banner(models.Model):
     title = models.CharField('Заголовок', max_length=200)
@@ -62,6 +67,10 @@ class SiteSettings(models.Model):
     whatsapp = models.CharField(
         'Номер WhatsApp', max_length=20,
         help_text='Только цифры, с кодом страны, без "+" и пробелов',
+    )
+    currency = models.CharField(
+        'Валюта', max_length=10, blank=True,
+        help_text='Показывается после цены, например: сом, ₽, $',
     )
     phone = models.CharField('Телефон для показа', max_length=30, blank=True)
     address = models.CharField('Адрес', max_length=300, blank=True)

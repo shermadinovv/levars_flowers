@@ -1,0 +1,114 @@
+{% extends 'shop/base.html' %}
+{% load static shop_tags %}
+
+{% block header_class %}header-transparent{% endblock %}
+
+{% block content %}
+{% url 'catalog' as catalog_url %}
+<!--== Start Hero Area Wrapper ==-->
+<section class="hero-slider-area position-relative">
+    <div class="swiper hero-slider-container">
+        <div class="swiper-wrapper">
+            {% for banner in banners %}
+            <div class="swiper-slide hero-slide-item">
+                <div class="container">
+                    <div class="row align-items-center position-relative">
+                        <div class="col-12 col-md-6">
+                            <div class="hero-slide-content">
+                                <div class="hero-slide-text-img"><img src="{% static 'assets/levars-flowers/levars_word.svg' %}" width="427" height="232" alt="Levars"></div>
+                                <h2 class="hero-slide-title">{{ banner.title }}</h2>
+                                {% if banner.subtitle %}<p class="hero-slide-desc">{{ banner.subtitle }}</p>{% endif %}
+                                {% if banner.button_text %}
+                                <a class="btn btn-border-dark" href="{{ banner.link|default:catalog_url }}">{{ banner.button_text }}</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="hero-slide-thumb">
+                                <img src="{{ banner.image.url }}" width="841" height="832" alt="{{ banner.title }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slide-text-shape"><img src="{% static 'assets/images/slider/text1.webp' %}" width="70" height="955" alt=""></div>
+                <div class="hero-slide-social-shape"></div>
+            </div>
+            {% empty %}
+            <div class="swiper-slide hero-slide-item">
+                <div class="container">
+                    <div class="row align-items-center position-relative">
+                        <div class="col-12 col-md-6">
+                            <div class="hero-slide-content">
+                                <div class="hero-slide-text-img"><img src="{% static 'assets/levars-flowers/levars_word.svg' %}" width="427" height="232" alt="Levars"></div>
+                                <h2 class="hero-slide-title">Дари любовь</h2>
+                                <p class="hero-slide-desc">Цветы — это больше, чем слова</p>
+                                <a class="btn btn-border-dark" href="{{ catalog_url }}">В каталог</a>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <div class="hero-slide-thumb">
+                                <img src="{% static 'assets/levars-flowers/home1.png' %}" width="841" height="832" alt="Levars Flowers">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-slide-text-shape"><img src="{% static 'assets/images/slider/text1.webp' %}" width="70" height="955" alt=""></div>
+                <div class="hero-slide-social-shape"></div>
+            </div>
+            {% endfor %}
+        </div>
+        <!--== Add Pagination ==-->
+        <div class="hero-slider-pagination"></div>
+    </div>
+    <div class="hero-slide-social-media">
+        {% if site.whatsapp %}<a href="{% whatsapp_url %}" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa fa-whatsapp"></i></a>{% endif %}
+        {% if site.instagram %}<a href="{{ site.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa fa-instagram"></i></a>{% endif %}
+    </div>
+</section>
+<!--== End Hero Area Wrapper ==-->
+
+{% if categories %}
+<!--== Start Product Category Area Wrapper ==-->
+<section class="section-space pb-0">
+    <div class="container">
+        <div class="row g-3 g-sm-6 justify-content-center">
+            {% for category in categories %}
+            <div class="col-6 col-lg-4 col-xl-2">
+                <a href="{{ catalog_url }}?category={{ category.slug }}" class="product-category-item" data-bg-color="{% cycle '#FFDAE0' '#FFEDB4' '#DFE4FF' '#FFEACC' '#FFF3DA' %}">
+                    {% if category.image %}<img class="icon" src="{{ category.image.url }}" width="80" height="80" alt="{{ category.name }}">{% endif %}
+                    <h3 class="title">{{ category.name }}</h3>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!--== End Product Category Area Wrapper ==-->
+{% endif %}
+
+<!--== Start Product Area Wrapper ==-->
+<section class="section-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title text-center">
+                    <h2 class="title">Наши букеты</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-n4 mb-sm-n10 g-3 g-sm-6">
+            {% for product in products %}
+            <div class="col-6 col-lg-4 mb-4 mb-sm-9">
+                {% include 'shop/_product_card.html' %}
+            </div>
+            {% empty %}
+            <div class="col-12"><p class="text-center">Товары скоро появятся.</p></div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-10">
+            <a class="btn btn-border-dark" href="{{ catalog_url }}">Весь каталог</a>
+        </div>
+    </div>
+</section>
+<!--== End Product Area Wrapper ==-->
+{% endblock %}

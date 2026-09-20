@@ -1,0 +1,87 @@
+{% extends 'shop/base.html' %}
+{% load static shop_tags %}
+
+{% block title %}{{ product.name }} — Levars Flowers{% endblock %}
+{% block description %}{{ product.name }} — {{ product.price|floatformat:"0g" }} {{ site.currency }}. Заказ через WhatsApp.{% endblock %}
+
+{% block content %}
+<!--== Start Page Header Area Wrapper ==-->
+<section class="page-header-area pt-10 pb-9" data-bg-color="#FFF3DA">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="page-header-st3-content text-center text-md-start">
+                    <ol class="breadcrumb justify-content-center justify-content-md-start">
+                        <li class="breadcrumb-item"><a class="text-dark" href="{% url 'home' %}">Главная</a></li>
+                        <li class="breadcrumb-item"><a class="text-dark" href="{% url 'catalog' %}">Каталог</a></li>
+                        <li class="breadcrumb-item"><a class="text-dark" href="{% url 'catalog' %}?category={{ product.category.slug }}">{{ product.category.name }}</a></li>
+                        <li class="breadcrumb-item active text-dark" aria-current="page">{{ product.name }}</li>
+                    </ol>
+                    <h2 class="page-header-title">{{ product.name }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--== End Page Header Area Wrapper ==-->
+
+<!--== Start Product Details Area Wrapper ==-->
+<section class="section-space">
+    <div class="container">
+        <div class="row product-details">
+            <div class="col-lg-6">
+                <div class="product-details-thumb">
+                    <img src="{{ product.image.url }}" width="570" height="693" alt="{{ product.name }}">
+                    {% if product.is_new %}<span class="flag-new">Новинка</span>{% endif %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="product-details-content">
+                    <h5 class="product-details-collection">{{ product.category.name }}</h5>
+                    <h3 class="product-details-title">{{ product.name }}</h3>
+                    {% if product.description %}
+                    <p class="mb-6">{{ product.description|linebreaksbr }}</p>
+                    {% endif %}
+                    <div class="product-details-action">
+                        <h4 class="price">
+                            {{ product.price|floatformat:"0g" }} {{ site.currency }}
+                            {% if product.old_price %}<del class="ms-2">{{ product.old_price|floatformat:"0g" }}</del>{% endif %}
+                        </h4>
+                        <div class="product-details-cart-wishlist">
+                            {% if product.in_stock %}
+                            <a class="btn" href="{% whatsapp_url product %}" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i> Заказать в WhatsApp</a>
+                            {% else %}
+                            <span class="btn disabled">Нет в наличии</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--== End Product Details Area Wrapper ==-->
+
+{% if related %}
+<!--== Start Related Products Wrapper ==-->
+<section class="section-space pt-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title text-center">
+                    <h2 class="title">Похожие товары</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-n4 mb-sm-n10 g-3 g-sm-6">
+            {% for product in related %}
+            <div class="col-6 col-lg-4 mb-4 mb-sm-8">
+                {% include 'shop/_product_card.html' %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!--== End Related Products Wrapper ==-->
+{% endif %}
+{% endblock %}

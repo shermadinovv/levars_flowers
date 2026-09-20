@@ -1,0 +1,224 @@
+{% load static shop_tags %}
+<!DOCTYPE html>
+<html class="no-js" lang="ru">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>{% block title %}Levars Flowers{% endblock %}</title>
+    {# ВАЖНО: перед запуском сайта удалите следующую строку, иначе поисковики не будут индексировать сайт #}
+    <meta name="robots" content="noindex, follow" />
+    <meta name="description" content="{% block description %}Levars Flowers — цветы и букеты. Заказ через WhatsApp.{% endblock %}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/images/favicon.svg' %}">
+
+    <!-- CSS (Font, Vendor, Icon, Plugins & Style CSS files) -->
+
+    <!-- Font CSS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS (Bootstrap & Icon Font) -->
+    <link rel="stylesheet" href="{% static 'assets/css/vendor/bootstrap.min.css' %}">
+
+    <!-- Plugins CSS (All Plugins Files) -->
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/swiper-bundle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/css/plugins/nice-select.css' %}">
+
+    <!-- Style CSS -->
+    <link rel="stylesheet" href="{% static 'assets/css/style.min.css' %}">
+
+    <style>
+        a.product-action-btn { text-decoration: none; }
+        .product-thumb img { width: 100%; aspect-ratio: 370 / 450; object-fit: cover; }
+        .product-details-thumb img { width: 100%; height: auto; }
+        .btn.disabled { pointer-events: none; opacity: .6; }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+
+    <!--== Wrapper Start ==-->
+    <div class="wrapper">
+
+        <!--== Start Header Wrapper ==-->
+        <header class="header-area sticky-header {% block header_class %}{% endblock %}">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-5 col-lg-2 col-xl-1">
+                        <div class="header-logo">
+                            <a href="{% url 'home' %}">
+                                <img class="logo-main" src="{% static 'assets/images/logo.webp' %}" width="95" height="68" alt="Levars Flowers" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 col-xl-7 d-none d-lg-block">
+                        <div class="header-navigation ps-7">
+                            <ul class="main-nav justify-content-start">
+                                <li><a href="{% url 'home' %}">Главная</a></li>
+                                <li{% if nav_categories %} class="has-submenu"{% endif %}><a href="{% url 'catalog' %}">Каталог</a>
+                                    {% if nav_categories %}
+                                    <ul class="submenu-nav">
+                                        {% for category in nav_categories %}
+                                        <li><a href="{% url 'catalog' %}?category={{ category.slug }}">{{ category.name }}</a></li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                </li>
+                                <li><a href="#contacts">Контакты</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-7 col-lg-3 col-xl-4">
+                        <div class="header-action justify-content-end">
+                            <button class="header-action-btn ms-0" type="button" data-bs-toggle="offcanvas" data-bs-target="#AsideOffcanvasSearch" aria-controls="AsideOffcanvasSearch">
+                                <span class="icon">
+                  <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                    <rect class="icon-rect" width="30" height="30" fill="url(#pattern1)"/>
+                    <defs>
+                      <pattern id="pattern1" patternContentUnits="objectBoundingBox" width="1" height="1">
+                        <use xlink:href="#image0_504:11" transform="scale(0.0333333)"/>
+                      </pattern>
+                      <image id="image0_504:11" width="30" height="30" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAABiUlEQVRIie2Wu04CQRSGP0G2EUtIbHwA8B3EQisLIcorEInx8hbEZ9DKy6toDI1oAgalNFpDoYWuxZzJjoTbmSXERP7kZDbZ859vdmb27MJcf0gBUAaugRbQk2gBV3IvmDa0BLwA4Zh4BorTACaAU6fwPXAI5IAliTxwBDScvJp4vWWhH0BlTLEEsC+5Fu6lkgNdV/gKDnxHCw2I9rSiNQNV8baBlMZYJtpTn71KAg9SY3dUYn9xezLPgG8P8BdwLteq5X7CzDbnAbXKS42WxtQVUzoGeFlqdEclxXrnhmhhkqR+8KuMqzHA1vumAddl3IwB3pLxVmOyr1NjwKQmURJ4lBp7GmOAafghpg1qdSDeDrCoNReJWmZB4dsAPsW7rYVa1Rx4FbOEw5TEPKmFvgMZX3DCgYeYNniMaQ5piTXghGhPLdTmZ33hYNpem98f/UHRwSxvhqhXx4anMA3/EmhiOlJPJnSBOb3uQcpOE65VhujPpAms/Bu4u+x3swRbeB24mTV4LgB+AFuLedkPkcmmAAAAAElFTkSuQmCC"/>
+                    </defs>
+                  </svg>
+                </span>
+                            </button>
+
+                            <button class="header-menu-btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#AsideOffcanvasMenu" aria-controls="AsideOffcanvasMenu">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            {% block content %}{% endblock %}
+        </main>
+
+        <!--== Start Footer Area Wrapper ==-->
+        <footer class="footer-area" id="contacts">
+            <div class="footer-main">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6 col-lg-4">
+                            <div class="widget-item">
+                                <div class="widget-about">
+                                    <a class="widget-logo" href="{% url 'home' %}">
+                                        <img src="{% static 'assets/images/logo.webp' %}" width="95" height="68" alt="Levars Flowers">
+                                    </a>
+                                    <p class="desc">Levars Flowers — свежие цветы и букеты. Выберите букет и напишите нам в WhatsApp, мы всё подготовим.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mt-md-0 mt-9">
+                            <div class="widget-item">
+                                <h4 class="widget-title">Навигация</h4>
+                                <ul class="widget-nav">
+                                    <li><a href="{% url 'home' %}">Главная</a></li>
+                                    <li><a href="{% url 'catalog' %}">Каталог</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-lg-5 mt-lg-0 mt-6">
+                            <div class="widget-item">
+                                <h4 class="widget-title">Контакты</h4>
+                                <ul class="widget-nav">
+                                    {% if site.phone %}<li><a href="tel:{{ site.phone }}">{{ site.phone }}</a></li>{% endif %}
+                                    {% if site.address %}<li>{{ site.address }}</li>{% endif %}
+                                    {% if site.working_hours %}<li>{{ site.working_hours }}</li>{% endif %}
+                                    {% if site.whatsapp %}<li><a href="{% whatsapp_url %}" target="_blank" rel="noopener">WhatsApp</a></li>{% endif %}
+                                </ul>
+                                {% if site.instagram %}
+                                <div class="widget-social">
+                                    <a href="{{ site.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="container pt-0 pb-0">
+                    <div class="footer-bottom-content">
+                        <p class="copyright">© {% now "Y" %} Levars Flowers</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!--== End Footer Area Wrapper ==-->
+
+        <!--== Scroll Top Button ==-->
+        <div id="scroll-to-top" class="scroll-to-top"><span class="fa fa-angle-up"></span></div>
+
+        <!--== Start Aside Search Form ==-->
+        <aside class="aside-search-box-wrapper offcanvas offcanvas-top" tabindex="-1" id="AsideOffcanvasSearch" aria-labelledby="offcanvasTopLabel">
+            <div class="offcanvas-header">
+                <h5 class="d-none" id="offcanvasTopLabel">Поиск</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Закрыть"><i class="fa fa-close"></i></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="container pt--0 pb--0">
+                    <div class="search-box-form-wrap">
+                        <div class="search-note">
+                            <p>Начните вводить и нажмите Enter</p>
+                        </div>
+                        <form action="{% url 'catalog' %}" method="get">
+                            <div class="aside-search-form position-relative">
+                                <label for="SearchInput" class="visually-hidden">Поиск</label>
+                                <input id="SearchInput" type="search" name="q" class="form-control" placeholder="Поиск по каталогу…">
+                                <button class="search-button" type="submit"><i class="fa fa-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        <!--== End Aside Search Form ==-->
+
+        <!--== Start Aside Menu ==-->
+        <aside class="off-canvas-wrapper offcanvas offcanvas-start" tabindex="-1" id="AsideOffcanvasMenu" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h1 class="d-none" id="offcanvasExampleLabel">Меню</h1>
+                <button class="btn-menu-close" data-bs-dismiss="offcanvas" aria-label="Закрыть">Меню <i class="fa fa-chevron-left"></i></button>
+            </div>
+            <div class="offcanvas-body">
+                <div id="offcanvasNav" class="offcanvas-menu-nav">
+                    <ul>
+                        <li class="offcanvas-nav-parent"><a class="offcanvas-nav-item" href="{% url 'home' %}">Главная</a></li>
+                        <li class="offcanvas-nav-parent"><a class="offcanvas-nav-item" href="{% url 'catalog' %}">Каталог</a></li>
+                        <li class="offcanvas-nav-parent"><a class="offcanvas-nav-item" href="#contacts" data-bs-dismiss="offcanvas">Контакты</a></li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+        <!--== End Aside Menu ==-->
+    </div>
+    <!--== Wrapper End ==-->
+
+    <!-- Vendors JS -->
+    <script src="{% static 'assets/js/vendor/modernizr-3.11.7.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/jquery-migrate-3.3.2.min.js' %}"></script>
+    <script src="{% static 'assets/js/vendor/bootstrap.bundle.min.js' %}"></script>
+    <!-- Plugins JS -->
+    <script src="{% static 'assets/js/plugins/swiper-bundle.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/fancybox.min.js' %}"></script>
+    <script src="{% static 'assets/js/plugins/jquery.nice-select.min.js' %}"></script>
+    <!-- Custom Main JS -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

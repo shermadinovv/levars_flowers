@@ -1,0 +1,36 @@
+{% load shop_tags %}
+<!--== Start Product Item ==-->
+<div class="product-item">
+    <div class="product-thumb">
+        <a class="d-block" href="{{ product.get_absolute_url }}">
+            <img src="{{ product.image.url }}" width="370" height="450" alt="{{ product.name }}">
+        </a>
+        {% if product.is_new %}<span class="flag-new">Новинка</span>{% endif %}
+        {% if product.in_stock %}
+        <div class="product-action">
+            <a class="product-action-btn action-btn-cart" href="{% whatsapp_url product %}" target="_blank" rel="noopener">
+                <span>Заказать</span>
+            </a>
+        </div>
+        {% endif %}
+    </div>
+    <div class="product-info">
+        <h4 class="title"><a href="{{ product.get_absolute_url }}">{{ product.name }}</a></h4>
+        <div class="prices">
+            {% if product.in_stock %}
+            <span class="price">{{ product.price|floatformat:"0g" }} {{ site.currency }}</span>
+            {% if product.old_price %}<span class="price-old">{{ product.old_price|floatformat:"0g" }}</span>{% endif %}
+            {% else %}
+            <span class="price">Нет в наличии</span>
+            {% endif %}
+        </div>
+    </div>
+    {% if product.in_stock %}
+    <div class="product-action-bottom">
+        <a class="product-action-btn action-btn-cart" href="{% whatsapp_url product %}" target="_blank" rel="noopener">
+            <span>Заказать</span>
+        </a>
+    </div>
+    {% endif %}
+</div>
+<!--== End Product Item ==-->
