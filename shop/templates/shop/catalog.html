@@ -1,41 +1,48 @@
 {% extends 'shop/base.html' %}
 {% load static shop_tags %}
 
-{% block title %}{% if current_category %}{{ current_category.name }}{% else %}Каталог{% endif %} — Levars Flowers{% endblock %}
+{% block title %}{% if current_category %}{{ current_category.name }}{% elif query %}Поиск{% else %}Каталог{% endif %} — Levars Flowers{% endblock %}
 
 {% block content %}
-<!--== Start Page Header Area Wrapper ==-->
-<section class="page-header-area pt-10 pb-9" data-bg-color="#FFF3DA">
+{% url 'catalog' as catalog_url %}
+
+{% if categories %}
+<!--== Start Product Category Area Wrapper ==-->
+<section class="section-space pb-0">
     <div class="container">
-        <div class="row">
-            <div class="col-md-5">
-                <div class="page-header-st3-content text-center text-md-start">
-                    <ol class="breadcrumb justify-content-center justify-content-md-start">
-                        <li class="breadcrumb-item"><a class="text-dark" href="{% url 'home' %}">Главная</a></li>
-                        <li class="breadcrumb-item active text-dark" aria-current="page">Каталог</li>
-                    </ol>
-                    <h2 class="page-header-title">{% if query %}Поиск: «{{ query }}»{% elif current_category %}{{ current_category.name }}{% else %}Все товары{% endif %}</h2>
-                </div>
+        <div class="row g-3 g-sm-6 justify-content-center">
+            <div class="col-6 col-lg-4 col-xl-2">
+                <a href="{{ catalog_url }}" class="product-category-item"{% if not current_category %} data-bg-color="#F1F1F1"{% endif %}>
+                    <h3 class="title">Все букеты</h3>
+                </a>
             </div>
-            <div class="col-md-7">
-                <h5 class="showing-pagination-results mt-5 mt-md-9 text-center text-md-end">Найдено: {{ page_obj.paginator.count }}</h5>
+            {% for category in categories %}
+            <div class="col-6 col-lg-4 col-xl-2">
+                <a href="{{ catalog_url }}?category={{ category.slug }}" class="product-category-item" data-bg-color="{% cycle '#FFDAE0' '#FFEDB4' '#DFE4FF' '#FFEACC' '#FFF3DA' %}">
+                    {% if category.image %}<img class="icon" src="{{ category.image.url }}" width="80" height="80" alt="{{ category.name }}">{% endif %}
+                    <h3 class="title">{{ category.name }}</h3>
+                </a>
             </div>
+            {% endfor %}
         </div>
     </div>
 </section>
-<!--== End Page Header Area Wrapper ==-->
+<!--== End Product Category Area Wrapper ==-->
+{% endif %}
+
+<div class="container">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mt-8 mb-2">
+        <h2 class="mb-0">{% if current_category %}{{ current_category.name }}{% elif query %}Поиск: «{{ query }}»{% else %}Все букеты{% endif %}</h2>
+        <span class="text-muted">Найдено: {{ page_obj.paginator.count }}</span>
+    </div>
+</div>
 
 <!--== Start Shop Top Bar Area Wrapper ==-->
 <div class="shop-top-bar-area">
     <div class="container">
-        <form method="get" id="catalog-filter" class="shop-top-bar">
+        <form method="get" id="catalog-sort" class="shop-top-bar">
+            {% if current_category %}<input type="hidden" name="category" value="{{ current_category.slug }}">{% endif %}
             {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
-            <select class="select-shoing" name="category">
-                <option value="">Все категории</option>
-                {% for category in categories %}
-                <option value="{{ category.slug }}"{% if current_category and current_category.pk == category.pk %} selected{% endif %}>{{ category.name }}</option>
-                {% endfor %}
-            </select>
             <select class="select-shoing" name="sort">
                 <option value=""{% if not sort %} selected{% endif %}>По умолчанию</option>
                 <option value="new"{% if sort == 'new' %} selected{% endif %}>Сначала новые</option>
@@ -47,41 +54,94 @@
 </div>
 <!--== End Shop Top Bar Area Wrapper ==-->
 
+{% if top_sellers and not current_category and not query %}
+<!--== Start Top Sellers Area Wrapper ==-->
+<section class="section-space pb-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title">
+                    <h2 class="title">Топ продаж</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-n4 mb-sm-n10 g-3 g-sm-6">
+            {% for product in top_sellers %}
+            <div class="col-6 col-lg-4 mb-4 mb-sm-8">
+                {% include 'shop/_product_card.html' %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!--== End Top Sellers Area Wrapper ==-->
+{% endif %}
+
 <!--== Start Product Area Wrapper ==-->
 <section class="section-space">
     <div class="container">
         <div class="row mb-n4 mb-sm-n10 g-3 g-sm-6">
             {% for product in page_obj %}
-            <div class="col-6 col-lg-4 mb-4 mb-sm-8">
+            <div class="col-6 col-md-4 col-xl-3 mb-4 mb-sm-8">
                 {% include 'shop/_product_card.html' %}
             </div>
             {% empty %}
             <div class="col-12"><p class="text-center">Ничего не найдено.</p></div>
             {% endfor %}
-            {% if page_obj.has_other_pages %}
-            <div class="col-12">
-                <ul class="pagination justify-content-center me-auto ms-auto mt-5 mb-0 mb-sm-10">
-                    {% if page_obj.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link previous" href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ page_obj.previous_page_number }}" aria-label="Назад">
-                            <span class="fa fa-chevron-left" aria-hidden="true"></span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    {% for n in page_obj.paginator.page_range %}
-                    <li class="page-item{% if n == page_obj.number %} active{% endif %}"><a class="page-link" href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ n }}">{{ n }}</a></li>
-                    {% endfor %}
-                    {% if page_obj.has_next %}
-                    <li class="page-item">
-                        <a class="page-link next" href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ page_obj.next_page_number }}" aria-label="Вперёд">
-                            <span class="fa fa-chevron-right" aria-hidden="true"></span>
-                        </a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
-            {% endif %}
         </div>
+
+
+        <div class="col-12 mt-8 pt-5">
+            <ul class="pagination justify-content-center me-auto ms-auto mt-5 mb-0 mb-sm-10">
+                
+                {# Стрелка «Назад» #}
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link previous" href="?page={{ page_obj.previous_page_number }}">
+                            <span class="fa fa-chevron-left"></span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link previous" href="#">
+                            <span class="fa fa-chevron-left"></span>
+                        </a>
+                    </li>
+                {% endif %}
+
+                {# Все страницы #}
+                {% for n in page_obj.paginator.page_range %}
+                    {% if n == page_obj.number %}
+                        <li class="page-item active">
+                            <a class="page-link" href="#">{{ n|stringformat:"02d" }}</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ n }}">{{ n|stringformat:"02d" }}</a>
+                        </li>
+                    {% endif %}
+                {% endfor %}
+
+                {# Стрелка «Вперёд» #}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link next" href="?page={{ page_obj.next_page_number }}">
+                            <span class="fa fa-chevron-right"></span>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link next" href="#">
+                            <span class="fa fa-chevron-right"></span>
+                        </a>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </div>
+
+        
+
     </div>
 </section>
 <!--== End Product Area Wrapper ==-->
@@ -89,8 +149,7 @@
 
 {% block scripts %}
 <script>
-    // Фильтры применяются сразу после выбора значения
-    $('#catalog-filter select').on('change', function () {
+    $('#catalog-sort select').on('change', function () {
         this.form.submit();
     });
 </script>

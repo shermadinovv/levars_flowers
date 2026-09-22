@@ -32,6 +32,7 @@ class Product(models.Model):
     is_new = models.BooleanField('Новинка', default=False)
     order = models.PositiveIntegerField('Порядок', default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+    is_bestseller = models.BooleanField('Топ продаж', default=False)
 
     class Meta:
         ordering = ['order', '-created_at']

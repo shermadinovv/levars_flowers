@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404, render
 
 from .models import Banner, Category, Product
 
-PER_PAGE = 12
+PER_PAGE = 4
 
 SORTS = {
     'new': ('-created_at',),
@@ -24,6 +24,7 @@ def home(request):
 
 def catalog(request):
     products = Product.objects.select_related('category')
+    top_sellers = Product.objects.filter(is_bestseller=True).select_related('category')[:3]
 
     current_category = None
     slug = request.GET.get('category', '').strip()
@@ -51,6 +52,7 @@ def catalog(request):
         'query': query,
         'sort': sort,
         'querystring': params.urlencode(),
+        'top_sellers': top_sellers,
     }
     return render(request, 'shop/catalog.html', context)
 
