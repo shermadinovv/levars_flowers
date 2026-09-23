@@ -10,7 +10,7 @@
 <!--== Start Product Category Area Wrapper ==-->
 <section class="section-space pb-0">
     <div class="container">
-        <div class="row g-3 g-sm-6 justify-content-center">
+        <div class="row g-3 g-sm-6 justify-content-center category-row">
             <div class="col-6 col-lg-4 col-xl-2">
                 <a href="{{ catalog_url }}" class="product-category-item"{% if not current_category %} data-bg-color="#F1F1F1"{% endif %}>
                     <h3 class="title">Все букеты</h3>
@@ -93,11 +93,11 @@
 
         <div class="col-12 mt-8 pt-5">
             <ul class="pagination justify-content-center me-auto ms-auto mt-5 mb-0 mb-sm-10">
-                
+
                 {# Стрелка «Назад» #}
                 {% if page_obj.has_previous %}
                     <li class="page-item">
-                        <a class="page-link previous" href="?page={{ page_obj.previous_page_number }}">
+                        <a class="page-link previous" href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ page_obj.previous_page_number }}">
                             <span class="fa fa-chevron-left"></span>
                         </a>
                     </li>
@@ -117,7 +117,7 @@
                         </li>
                     {% else %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{ n }}">{{ n|stringformat:"02d" }}</a>
+                            <a class="page-link" href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ n }}">{{ n|stringformat:"02d" }}</a>
                         </li>
                     {% endif %}
                 {% endfor %}
@@ -125,7 +125,7 @@
                 {# Стрелка «Вперёд» #}
                 {% if page_obj.has_next %}
                     <li class="page-item">
-                        <a class="page-link next" href="?page={{ page_obj.next_page_number }}">
+                        <a class="page-link next" href="?{% if querystring %}{{ querystring }}&amp;{% endif %}page={{ page_obj.next_page_number }}">
                             <span class="fa fa-chevron-right"></span>
                         </a>
                     </li>

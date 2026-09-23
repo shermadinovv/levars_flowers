@@ -38,7 +38,25 @@
         .product-thumb img { width: 100%; aspect-ratio: 370 / 450; object-fit: cover; }
         .product-details-thumb img { width: 100%; height: auto; }
         .btn.disabled { pointer-events: none; opacity: .6; }
-    </style>
+        @media (max-width: 767.98px) and (orientation: portrait) {
+            .category-row {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 4px;
+            }
+            .category-row::-webkit-scrollbar {
+                display: none;
+            }
+            .category-row > [class*="col-"] {
+                touch-action: pan-x;
+                flex: 0 0 42%;
+                max-width: 42%;
+                scroll-snap-align: start;
+            }
+        }
+            </style>
     {% block extra_head %}{% endblock %}
 </head>
 
@@ -54,7 +72,7 @@
                     <div class="col-5 col-lg-2 col-xl-1">
                         <div class="header-logo">
                             <a href="{% url 'home' %}">
-                                <img class="logo-main" src="{% static 'assets/images/logo.webp' %}" width="95" height="68" alt="Levars Flowers" />
+                                <img class="logo-main" src="{% static 'assets/images/logo_levars_black.png' %}" width="95" height="68" alt="Levars Flowers" />
                             </a>
                         </div>
                     </div>
@@ -115,7 +133,7 @@
                             <div class="widget-item">
                                 <div class="widget-about">
                                     <a class="widget-logo" href="{% url 'home' %}">
-                                        <img src="{% static 'assets/images/logo.webp' %}" width="95" height="68" alt="Levars Flowers">
+                                        <img src="{% static 'assets/images/logo_levars_black.png' %}" width="95" height="68" alt="Levars Flowers">
                                     </a>
                                     <p class="desc">Levars Flowers — свежие цветы и букеты. Выберите букет и напишите нам в WhatsApp, мы всё подготовим.</p>
                                 </div>
@@ -150,7 +168,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <div class="container pt-0 pb-0">
+                <div class="container pt-0 pb-0">   
                     <div class="footer-bottom-content">
                         <p class="copyright">© {% now "Y" %} Levars Flowers</p>
                     </div>
