@@ -71,7 +71,7 @@
 <!--== Start Product Category Area Wrapper ==-->
 <section class="section-space pb-0">
     <div class="container">
-        <div class="row g-3 g-sm-6 justify-content-center">
+        <div class="row g-3 g-sm-6 justify-content-center category-grid">
             {% for category in categories %}
             <div class="col-6 col-lg-4 col-xl-2">
                 <a href="{{ catalog_url }}?category={{ category.slug }}" class="product-category-item" data-bg-color="{% cycle '#FFDAE0' '#FFEDB4' '#DFE4FF' '#FFEACC' '#FFF3DA' %}">
