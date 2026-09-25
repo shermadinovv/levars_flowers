@@ -6,30 +6,6 @@
 {% block content %}
 {% url 'catalog' as catalog_url %}
 
-{% if categories %}
-<!--== Start Product Category Area Wrapper ==-->
-<section class="section-space pb-0">
-    <div class="container">
-        <div class="row g-3 g-sm-6 justify-content-center category-grid">
-        {% comment %} <div class="row g-3 g-sm-6 justify-content-center category-row"> {% endcomment %}
-            <div class="col-6 col-lg-4 col-xl-2">
-                <a href="{{ catalog_url }}" class="product-category-item"{% if not current_category %} data-bg-color="#F1F1F1"{% endif %}>
-                    <h3 class="title">Все букеты</h3>
-                </a>
-            </div>
-            {% for category in categories %}
-            <div class="col-6 col-lg-4 col-xl-2">
-                <a href="{{ catalog_url }}?category={{ category.slug }}" class="product-category-item" data-bg-color="{% cycle '#FFDAE0' '#FFEDB4' '#DFE4FF' '#FFEACC' '#FFF3DA' %}">
-                    {% if category.image %}<img class="icon" src="{{ category.image.url }}" width="80" height="80" alt="{{ category.name }}">{% endif %}
-                    <h3 class="title">{{ category.name }}</h3>
-                </a>
-            </div>
-            {% endfor %}
-        </div>
-    </div>
-</section>
-<!--== End Product Category Area Wrapper ==-->
-{% endif %}
 
 <div class="container">
     <div class="d-flex flex-wrap justify-content-between align-items-center mt-8 mb-2">
@@ -54,6 +30,33 @@
     </div>
 </div>
 <!--== End Shop Top Bar Area Wrapper ==-->
+
+{% if categories %}
+<!--== Start Product Category Area Wrapper ==-->
+<section class="section-space pb-0">
+    <div class="container">
+        <div class="row g-3 g-sm-6 justify-content-center category-grid">
+        {% comment %} <div class="row g-3 g-sm-6 justify-content-center category-row"> {% endcomment %}
+            <div class="col-6 col-lg-4 col-xl-2">
+                <a href="{{ catalog_url }}" class="product-category-item"{% if not current_category %} data-bg-color="#F1F1F1"{% endif %}>
+                    <img class="icon" src="{% static 'assets/images/logo.svg' %}" width="80" height="80" alt="all">
+                    <h3 class="title">Все товары</h3>
+                </a>
+            </div>
+            {% for category in categories %}
+            <div class="col-6 col-lg-4 col-xl-2">
+                <a href="{{ catalog_url }}?category={{ category.slug }}" class="product-category-item" data-bg-color="{% cycle '#FFDAE0' '#FFEDB4' '#DFE4FF' '#FFEACC' '#FFF3DA' %}">
+                    {% if category.image %}<img class="icon" src="{{ category.image.url }}" width="80" height="80" alt="{{ category.name }}">{% endif %}
+                    <h3 class="title">{{ category.name }}</h3>
+                </a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+<!--== End Product Category Area Wrapper ==-->
+{% endif %}
+
 
 <!--== Start Product Area Wrapper ==-->
 <section class="section-space">
@@ -125,8 +128,8 @@
 <section>
     <div class="container">
     <!--== Start Product Category Item ==-->
-            <a href="product.html" class="product-banner-item">
-                    <img src="media/banners/types_of_flowers_banner.webp" height="240" alt="Image-HasTech">
+            <a href="{% url 'catalog' %}" class="product-banner-item">
+                <img src="{% static 'assets/images/banners/6.png' %}" width="1170" height="240" alt="Баннер">
             </a>
         <!--== End Product Category Item ==-->
     </div>
