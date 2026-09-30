@@ -46,6 +46,64 @@
                 row-gap: 2.5rem;
             }
         }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: #25D366;
+            color: #fff !important;
+            border: none;
+            border-radius: 50px;
+            padding: 14px 32px;
+            font-weight: 600;
+            font-size: 15px;
+            line-height: 1;
+            text-decoration: none;
+            transition: background-color .25s ease, transform .15s ease, box-shadow .25s ease;
+            box-shadow: 0 4px 14px rgba(37, 211, 102, .35);
+        }
+        .btn-whatsapp:hover {
+            background-color: #1ebe5b;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(37, 211, 102, .45);
+        }
+        .btn-whatsapp:active {
+            transform: translateY(0);
+        }
+        .btn-whatsapp i {
+            font-size: 18px;
+        }
+        .btn-whatsapp.disabled {
+            background-color: #ccc;
+            box-shadow: none;
+            color: #666 !important;
+        }
+
+        .product-action-bottom {
+            background-color: #25D366 !important;
+            justify-content: center !important;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: background-color .25s ease;
+        }
+        .product-action-bottom:hover {
+            background-color: #1ebe5b !important;
+        }
+        .product-action-bottom .action-btn-cart {
+            width: 100%;
+            justify-content: center;
+            text-align: center;
+            background-color: transparent !important;
+            border: none !important;
+            color: #fff !important;
+        }
+        .product-action-bottom .action-btn-cart i {
+            margin-right: 4px;
+        }
+
         {% comment %} @media (max-width: 767.98px) and (orientation: portrait) {
             .category-row {
                 flex-wrap: nowrap;

@@ -9,7 +9,7 @@
         {% if product.in_stock %}
         <div class="product-action">
             <a class="product-action-btn action-btn-cart" href="{% whatsapp_url product %}" target="_blank" rel="noopener">
-                <span>Заказать</span>
+                <i class="fa fa-whatsapp"></i> <span>Заказать</span>
             </a>
         </div>
         {% endif %}
@@ -28,7 +28,7 @@
     {% if product.in_stock %}
     <div class="product-action-bottom">
         <a class="product-action-btn action-btn-cart" href="{% whatsapp_url product %}" target="_blank" rel="noopener">
-            <span>Заказать</span>
+            <i class="fa fa-whatsapp"></i> <span>Заказать</span>
         </a>
     </div>
     {% endif %}

@@ -49,9 +49,8 @@
                         </h4>
                         <div class="product-details-cart-wishlist">
                             {% if product.in_stock %}
-                            <a class="btn" href="{% whatsapp_url product %}" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i> Заказать в WhatsApp</a>
-                            {% else %}
-                            <span class="btn disabled">Нет в наличии</span>
+                            <a class="btn btn-whatsapp" href="{% whatsapp_url product %}" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i> Заказать</a>{% else %}
+                            <span class="btn btn-whatsapp disabled">Нет в наличии</span>
                             {% endif %}
                         </div>
                     </div>
