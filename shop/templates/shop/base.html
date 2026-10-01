@@ -82,6 +82,29 @@
             color: #666 !important;
         }
 
+        /* Кнопка "Заказать" на фото товара (при наведении на компьютере) */
+        .product-thumb .product-action .action-btn-cart {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background-color: #25D366 !important;
+            border-color: #25D366 !important;
+            border-radius: 50px;
+            transition: background-color .25s ease, transform .15s ease;
+        }
+        .product-thumb .product-action .action-btn-cart:hover {
+            background-color: #1ebe5b !important;
+            border-color: #1ebe5b !important;
+            transform: translateY(-2px);
+        }
+        .product-thumb .product-action .action-btn-cart,
+        .product-thumb .product-action .action-btn-cart i,
+        .product-thumb .product-action .action-btn-cart span {
+            color: #fff !important;
+        }
+
+        /* Зелёная плашка "Заказать" снизу карточки (видна на телефоне) */
         .product-action-bottom {
             background-color: #25D366 !important;
             justify-content: center !important;
