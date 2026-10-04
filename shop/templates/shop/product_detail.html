@@ -5,25 +5,7 @@
 {% block description %}{{ product.name }} — {{ product.price|floatformat:"0g" }} {{ site.currency }}. Заказ через WhatsApp.{% endblock %}
 
 {% block content %}
-<!--== Start Page Header Area Wrapper ==-->
-<section class="page-header-area pt-10 pb-9" data-bg-color="#FFF3DA">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <div class="page-header-st3-content text-center text-md-start">
-                    <ol class="breadcrumb justify-content-center justify-content-md-start">
-                        <li class="breadcrumb-item"><a class="text-dark" href="{% url 'home' %}">Главная</a></li>
-                        <li class="breadcrumb-item"><a class="text-dark" href="{% url 'catalog' %}">Каталог</a></li>
-                        <li class="breadcrumb-item"><a class="text-dark" href="{% url 'catalog' %}?category={{ product.category.slug }}">{{ product.category.name }}</a></li>
-                        <li class="breadcrumb-item active text-dark" aria-current="page">{{ product.name }}</li>
-                    </ol>
-                    <h2 class="page-header-title">{{ product.name }}</h2>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!--== End Page Header Area Wrapper ==-->
+
 
 <!--== Start Product Details Area Wrapper ==-->
 <section class="section-space">
@@ -43,13 +25,13 @@
                     <p class="mb-6">{{ product.description|linebreaksbr }}</p>
                     {% endif %}
                     <div class="product-details-action">
-                        <h4 class="price">
-                            {{ product.price|floatformat:"0g" }} {{ site.currency }}
-                            {% if product.old_price %}<del class="ms-2">{{ product.old_price|floatformat:"0g" }}</del>{% endif %}
-                        </h4>
+                            <h4 class="price price-current">
+                                {{ product.price|floatformat:"0g" }} {{ site.currency }}
+                                {% if product.old_price %}<del class="price-old">{{ product.old_price|floatformat:"0g" }}</del>{% endif %}
+                            </h4>
                         <div class="product-details-cart-wishlist">
                             {% if product.in_stock %}
-                            <a class="btn btn-whatsapp" href="{% whatsapp_url product %}" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i> Заказать</a>{% else %}
+                            <a class="btn btn-whatsapp" href="{% whatsapp_url product %}" target="_blank" rel="noopener"><i class="fa fa-whatsapp"></i> Заказать в WhatsApp</a>{% else %}
                             <span class="btn btn-whatsapp disabled">Нет в наличии</span>
                             {% endif %}
                         </div>

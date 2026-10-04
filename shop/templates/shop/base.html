@@ -47,6 +47,25 @@
             }
         }
 
+        .product-details-action {
+            display: block !important;
+        }
+        .product-details-action .price-current {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+        }
+        .product-details-action .price-old {
+            display: block;
+            color: #9a9a9a;
+            font-size: 16px;
+            font-weight: 400;
+            margin-top: 4px;
+        }
+
+        .product-details-cart-wishlist {
+            margin-left: 0 !important;
+        }
+
         .btn-whatsapp {
             display: inline-flex;
             align-items: center;
@@ -55,12 +74,14 @@
             background-color: #25D366;
             color: #fff !important;
             border: none;
-            border-radius: 50px;
+            border-radius: 10px;
             padding: 14px 32px;
             font-weight: 600;
             font-size: 15px;
-            line-height: 1;
+            line-height: 1.2;
             text-decoration: none;
+            text-transform: none;
+            white-space: nowrap;
             transition: background-color .25s ease, transform .15s ease, box-shadow .25s ease;
             box-shadow: 0 4px 14px rgba(37, 211, 102, .35);
         }
@@ -80,6 +101,13 @@
             background-color: #ccc;
             box-shadow: none;
             color: #666 !important;
+        }
+        .product-details-content {
+            padding-left: 24px;
+        }
+        .product-details-content > * {
+            margin-left: 0 !important;
+            padding-left: 0 !important;
         }
 
         /* Кнопка "Заказать" на фото товара (при наведении на компьютере) */
