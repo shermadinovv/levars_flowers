@@ -1,0 +1,42 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}Частые вопросы — Levars Flowers{% endblock %}
+
+{% block content %}
+<!--== Start Faq Area Wrapper ==-->
+<section class="faq-area section-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="section-title text-center">
+                    <h2 class="title">Частые вопросы</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="accordion" id="FaqAccordion">
+                    {% for item in faqs %}
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="heading{{ forloop.counter }}">
+                            <button class="accordion-button{% if not forloop.first %} collapsed{% endif %}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ forloop.counter }}" aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}" aria-controls="collapse{{ forloop.counter }}">
+                                {{ item.question }}
+                            </button>
+                        </h2>
+                        <div id="collapse{{ forloop.counter }}" class="accordion-collapse collapse{% if forloop.first %} show{% endif %}" aria-labelledby="heading{{ forloop.counter }}" data-bs-parent="#FaqAccordion">
+                            <div class="accordion-body">
+                                <p>{{ item.answer|linebreaksbr }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <p class="text-center">Вопросы скоро появятся.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--== End Faq Area Wrapper ==-->
+{% endblock %}

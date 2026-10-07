@@ -93,3 +93,17 @@ class SiteSettings(models.Model):
 
     def __str__(self):
         return 'Настройки сайта'
+
+class FAQ(models.Model):
+    question = models.CharField('Вопрос', max_length=300)
+    answer = models.TextField('Ответ')
+    order = models.PositiveIntegerField('Порядок', default=0)
+    is_active = models.BooleanField('Показывать', default=True)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'Вопрос-ответ'
+        verbose_name_plural = 'FAQ'
+
+    def __str__(self):
+        return self.question

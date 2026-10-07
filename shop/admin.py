@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from .models import Banner, Category, Product, SiteSettings
-
+from .models import Banner, Category, FAQ, Product, SiteSettings
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -32,3 +31,9 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 
     def has_delete_permission(self, request, obj=None):
         return False
+
+
+@admin.register(FAQ)
+class FAQAdmin(admin.ModelAdmin):
+    list_display = ('question', 'is_active', 'order')
+    list_editable = ('is_active', 'order')

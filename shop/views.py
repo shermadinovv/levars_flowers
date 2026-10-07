@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, render
 
-from .models import Banner, Category, Product
+from .models import Banner, Category, FAQ, Product
 
 PER_PAGE = 4
 
@@ -64,3 +64,7 @@ def product_detail(request, slug):
         .exclude(pk=product.pk)[:3]
     )
     return render(request, 'shop/product_detail.html', {'product': product, 'related': related})
+
+
+def faq(request):
+    return render(request, 'shop/faq.html', {'faqs': FAQ.objects.filter(is_active=True)})
