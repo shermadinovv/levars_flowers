@@ -7,15 +7,23 @@
 <!--== Start Faq Area Wrapper ==-->
 <section class="faq-area section-space">
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="section-title text-center">
-                    <h2 class="title">Частые вопросы</h2>
+        <div class="row flex-xl-row-reverse align-items-center">
+            <div class="col-lg-6 col-xl-7">
+                <div class="faq-thumb">
+                    <img src="{% static 'assets/images/photos/faq-home.webp' %}" width="601" height="368" alt="Levars Flowers">
+                </div>
+            </div>
+            <div class="col-lg-6 col-xl-5">
+                <div class="faq-content">
+                    <div class="faq-text-img"><img src="{% static 'assets/images/photos/faq.webp' %}" width="199" height="169" alt=""></div>
+                    <h2 class="faq-title">Частые вопросы</h2>
+                    <div class="faq-line"></div>
+                    <p class="faq-desc">Собрали ответы на вопросы, которые чаще всего задают перед заказом букета. Не нашли своего — напишите нам в WhatsApp, ответим лично и быстро.</p>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-lg-8 offset-lg-2">
+        <div class="row mt-8">
+            <div class="col-12">
                 <div class="accordion" id="FaqAccordion">
                     {% for item in faqs %}
                     <div class="accordion-item">
