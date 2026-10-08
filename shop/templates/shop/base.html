@@ -155,6 +155,19 @@
             margin-right: 4px;
         }
 
+        .store-city {
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+        .store-hours {
+            color: #9a9a9a;
+            font-size: 14px;
+        }
+
+        .header-logo {
+            margin-top: 16px;
+        }
+
         {% comment %} @media (max-width: 767.98px) and (orientation: portrait) {
             .category-row {
                 flex-wrap: nowrap;
@@ -256,27 +269,27 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-lg-3 mt-md-0 mt-9">
-                            <div class="widget-item">
-                                <h4 class="widget-title">Навигация</h4>
-                                <ul class="widget-nav">
-                                    <li><a href="{% url 'home' %}">Главная</a></li>
-                                    <li><a href="{% url 'catalog' %}">Каталог</a></li>
-                                </ul>
-                            </div>
-                        </div>
                         <div class="col-md-6 col-lg-5 mt-lg-0 mt-6">
                             <div class="widget-item">
-                                <h4 class="widget-title">Контакты</h4>
-                                <ul class="widget-nav">
-                                    {% if site.phone %}<li><a href="tel:{{ site.phone }}">{{ site.phone }}</a></li>{% endif %}
-                                    {% if site.address %}<li>{{ site.address }}</li>{% endif %}
-                                    {% if site.working_hours %}<li>{{ site.working_hours }}</li>{% endif %}
-                                    {% if site.whatsapp %}<li><a href="{% whatsapp_url %}" target="_blank" rel="noopener">WhatsApp</a></li>{% endif %}
-                                </ul>
-                                {% if site.instagram %}
-                                <div class="widget-social">
-                                    <a href="{{ site.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
+                                <h4 class="widget-title">Наши магазины</h4>
+                                <div class="row g-4">
+                                    {% for store in stores %}
+                                    <div class="col-sm-6">
+                                        <p class="store-city mb-1">{{ store.city }}</p>
+                                        <p class="mb-1">
+                                            {% if store.map_link %}<a href="{{ store.map_link }}" target="_blank" rel="noopener">{{ store.address }}</a>{% else %}{{ store.address }}{% endif %}
+                                        </p>
+                                        {% if store.working_hours %}<p class="store-hours mb-1">{{ store.working_hours }}</p>{% endif %}
+                                        {% if store.phone %}<p class="mb-0"><a href="tel:{{ store.phone }}">{{ store.phone }}</a></p>{% endif %}
+                                    </div>
+                                    {% empty %}
+                                    <div class="col-12"><p class="mb-0">Скоро добавим адреса магазинов.</p></div>
+                                    {% endfor %}
+                                </div>
+                                {% if site.whatsapp or site.instagram %}
+                                <div class="widget-social mt-4">
+                                    {% if site.instagram %}<a href="{{ site.instagram }}" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa fa-instagram"></i></a>{% endif %}
+                                    {% if site.whatsapp %}<a href="{% whatsapp_url %}" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fa fa-whatsapp"></i></a>{% endif %}                                    
                                 </div>
                                 {% endif %}
                             </div>

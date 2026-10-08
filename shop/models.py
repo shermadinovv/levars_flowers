@@ -107,3 +107,24 @@ class FAQ(models.Model):
 
     def __str__(self):
         return self.question
+
+
+class Store(models.Model):
+    city = models.CharField('Город', max_length=100)
+    address = models.CharField('Адрес', max_length=300)
+    working_hours = models.CharField('Часы работы', max_length=100, blank=True)
+    phone = models.CharField('Телефон', max_length=30, blank=True)
+    map_link = models.URLField(
+        'Ссылка на карту', blank=True,
+        help_text='Ссылка на Google Карты или 2ГИС. В приложении откройте точку на карте, нажмите «Поделиться» и скопируйте ссылку.',
+    )
+    order = models.PositiveIntegerField('Порядок', default=0)
+    is_active = models.BooleanField('Показывать', default=True)
+
+    class Meta:
+        ordering = ['order']
+        verbose_name = 'Магазин'
+        verbose_name_plural = 'Магазины'
+
+    def __str__(self):
+        return f'{self.city} — {self.address}'

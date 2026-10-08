@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Banner, Category, FAQ, Product, SiteSettings
+from .models import Banner, Category, FAQ, Product, SiteSettings, Store
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
@@ -36,4 +36,10 @@ class SiteSettingsAdmin(admin.ModelAdmin):
 @admin.register(FAQ)
 class FAQAdmin(admin.ModelAdmin):
     list_display = ('question', 'is_active', 'order')
+    list_editable = ('is_active', 'order')
+
+
+@admin.register(Store)
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ('city', 'address', 'is_active', 'order')
     list_editable = ('is_active', 'order')
