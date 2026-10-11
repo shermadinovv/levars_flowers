@@ -1,0 +1,70 @@
+{% extends 'shop/base.html' %}
+{% load static %}
+
+{% block title %}О нас — Levars Flowers{% endblock %}
+
+{% block content %}
+<!--== Start Page Header Area Wrapper ==-->
+<section class="page-header-area pt-10 pb-9" data-bg-color="#FFF3DA">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-7 col-xl-5">
+                <div class="page-header-content">
+                    <h2 class="page-header-title">О нас</h2>
+                    <h4 class="page-header-sub-title">Цветы, которые дарят настроение</h4>
+                    <p class="page-header-desc">Levars Flowers — небольшая цветочная мастерская. Собираем букеты с заботой о каждой детали и доставляем их по городу.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--== End Page Header Area Wrapper ==-->
+
+<!--== Start About Area Wrapper ==-->
+<section class="section-space">
+    <div class="container">
+        <div class="row align-items-center g-6">
+            <div class="col-lg-6">
+                <div class="about-thumb">
+                    <img src="{% static 'assets/images/photos/about2.webp' %}" width="600" height="600" alt="Levars Flowers" style="width:100%;height:auto;border-radius:10px;">
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-content">
+                    <h2 class="title">Наша история</h2>
+                    <p class="desc">Мы начинали с одного маленького магазина и любви к живым цветам. Сегодня Levars Flowers — это несколько точек в городе, где каждый букет собирают вручную, подбирая свежие цветы под настроение и повод.</p>
+                    <p class="desc">Для нас важно, чтобы заказать букет было так же просто, как написать другу: выбрали понравившийся вариант в каталоге — и прямо в WhatsApp обсудили детали.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--== End About Area Wrapper ==-->
+
+<!--== Start Feature Area Wrapper ==-->
+<div class="feature-area section-space pt-0">
+    <div class="container">
+        <div class="row mb-n9">
+            <div class="col-md-6 col-lg-4 mb-8">
+                <div class="feature-item">
+                    <h5 class="title">Свежие цветы</h5>
+                    <p class="desc">Закупаем цветы небольшими партиями, поэтому букеты собираем только из свежих.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-8">
+                <div class="feature-item">
+                    <h5 class="title">Быстрая доставка</h5>
+                    <p class="desc">Доставляем букеты в день заказа при заявке с утра, точное время согласуем в WhatsApp.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-4 mb-8">
+                <div class="feature-item">
+                    <h5 class="title">Индивидуальный подход</h5>
+                    <p class="desc">Поможем подобрать букет под повод, бюджет или пожелания — просто напишите нам.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--== End Feature Area Wrapper ==-->
+{% endblock %}

@@ -68,3 +68,7 @@ def product_detail(request, slug):
 
 def faq(request):
     return render(request, 'shop/faq.html', {'faqs': FAQ.objects.filter(is_active=True)})
+
+
+def about(request):
+    return render(request, 'shop/about.html')
