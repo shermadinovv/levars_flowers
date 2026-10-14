@@ -14,23 +14,7 @@
     </div>
 </div>
 
-<!--== Start Shop Top Bar Area Wrapper ==-->
-<div class="shop-top-bar-area">
-    <div class="container">
-        <form method="get" id="catalog-sort" class="shop-top-bar">
-            {% if current_category %}<input type="hidden" name="category" value="{{ current_category.slug }}">{% endif %}
-            {% if query %}<input type="hidden" name="q" value="{{ query }}">{% endif %}
-            <select class="select-shoing" name="sort">
-                <option value=""{% if not sort %} selected{% endif %}>По умолчанию</option>
-                <option value="new"{% if sort == 'new' %} selected{% endif %}>Сначала новые</option>
-                <option value="price_asc"{% if sort == 'price_asc' %} selected{% endif %}>Сначала дешёвые</option>
-                <option value="price_desc"{% if sort == 'price_desc' %} selected{% endif %}>Сначала дорогие</option>
-            </select>
-        </form>
-    </div>
-</div>
-<!--== End Shop Top Bar Area Wrapper ==-->
-
+ 
 {% if categories %}
 <!--== Start Product Category Area Wrapper ==-->
 <section class="section-space pb-0">
@@ -134,8 +118,6 @@
         <!--== End Product Category Item ==-->
     </div>
 </section>
-
-
 
 
 {% if top_sellers and not current_category and not query %}
